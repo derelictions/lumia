@@ -37,7 +37,7 @@ export default function Navbar({}) {
 function Logo({}) {
 	return (
 		<HStack>
-			<Image w='50px' src='/altl.png' alt='Lumia' />
+			<Image w='50px' src='/assets/altl.png' alt='Lumia' />
 			<Text fontSize='lg' fontWeight='bold'>
 				Lumia
 			</Text>

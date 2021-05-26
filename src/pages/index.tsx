@@ -1,12 +1,9 @@
 import Head from 'next/head';
-
+import Navbar from '../common/navbar/navbar';
 export default function home() {
 	return (
 		<div>
-			<Head>
-				<title>Lumia</title>
-				<link rel='icon' href='/favicon.ico' />
-			</Head>
+            <Navbar/>
 			<main>
             </main>
 			<footer></footer>
