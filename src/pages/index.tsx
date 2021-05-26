@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Navbar from '../common/navbar';
 
 export default function home() {
 	return (
@@ -9,7 +8,6 @@ export default function home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<main>
-                <Navbar/>
             </main>
 			<footer></footer>
 		</div>
