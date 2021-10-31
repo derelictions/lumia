@@ -1,13 +1,37 @@
 import router from 'next/router';
-import React, { Props } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { AppProps } from 'next/app';
-import { Box, Text, Image, Stack, HStack, Link } from '@chakra-ui/react';
+import {
+	Box,
+	Text,
+	Image,
+	Stack,
+	HStack,
+	Link,
+	useDisclosure,
+	Flex,
+	Spacer,
+	useBreakpointValue,
+	Button,
+} from '@chakra-ui/react';
 import {
 	CloseIcon,
 	TriangleDownIcon,
 	SunIcon,
 	MoonIcon,
 } from '@chakra-ui/icons';
+import {
+	Drawer,
+	DrawerBody,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerOverlay,
+	DrawerContent,
+	DrawerCloseButton,
+} from '@chakra-ui/react';
+
+import Sidebar from './sidebar';
+import { variant } from '../../types';
 
 // const Navbar: React.FC<{}> = () => {
 //     const router = useRouter();
@@ -24,15 +48,38 @@ import {
 
 // }
 
-export default function Navbar({}) {
-	return (
-		<HStack>
-			<Logo />
-		</HStack>
-	);
-}
+interface Props {}
 
-// Logo component
+const smVariant: variant = { navigation: 'drawer', navigationButton: true };
+const mdVariant: variant = { navigation: 'sidebar', navigationButton: false };
+
+const Navbar: FunctionComponent<Props> = ({}) => {
+	// const [isOpen, setIsOpen] = useState(false);
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
+	const [isDark, setIsDark] = useState(false);
+	return (
+		<Flex>
+			<Logo />
+			<Spacer />
+			<Button
+				leftIcon={<TriangleDownIcon />}
+				onClick={onOpen}
+				display={{ md: 'none' }}
+			>
+				Menu
+			</Button>
+
+			<Sidebar
+				variant={variants}
+				isOpen={isOpen}
+				onClose={onClose}
+			></Sidebar>
+		</Flex>
+	);
+};
+
+export default Navbar;
 
 function Logo({}) {
 	return (
@@ -47,41 +94,30 @@ function Logo({}) {
 
 // Drop down button for toggling menu on phone and tablet
 
-function MenuToggle({ toggle, isOpen }: any) {
-	return (
-		<Box display={{ base: 'block', md: 'none' }} onClick={toggle}>
-			{isOpen ? <CloseIcon /> : <TriangleDownIcon />}
-		</Box>
-	);
-}
-
 // For dark and light theme
 
-function ThemeToggle({ toggle, isOpen }: any) {
-	return (
-		<Box display={{ base: 'block', md: 'none' }} onClick={toggle}>
-			{isOpen ? <MoonIcon /> : <SunIcon />}
-		</Box>
-	);
-}
+// function ThemeToggle({ toggle, isOpen }: any) {
+// 	return (
+// 	);
+// }
 
 // TODO: stack depeneding on responsive breakpts
 
-function Header({}) {
-	const [isOpen, setIsOpen] = React.useState(false);
-	const toggle = () => setIsOpen(!isOpen);
+// function Header({}) {
+// 	const [isOpen, setIsOpen] = React.useState(false);
+// 	const toggle = () => setIsOpen(!isOpen);
 
-	return <MenuToggle toggle={toggle} isOpen={isOpen} />;
-}
+// 	return <MenuToggle toggle={toggle} isOpen={isOpen} />;
+// }
 
-function MenuItem({ children, isLast, to = '/', ...rest }: any) {
-	return (
-		<Link onClick={() => router.push(to)}>
-			<Text display='block' {...rest}>
-				{children}
-			</Text>
-		</Link>
-	);
-}
+// function MenuItem({ children, isLast, to = '/', ...rest }: any) {
+// 	return (
+// 		<Link onClick={() => router.push(to)}>
+// 			<Text display='block' {...rest}>
+// 				{children}
+// 			</Text>
+// 		</Link>
+// 	);
+// }
 
 // We create responsive breakpoints with the Stack component
