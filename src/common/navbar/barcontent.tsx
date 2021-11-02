@@ -5,7 +5,7 @@ import {
 	SunIcon,
 	MoonIcon,
 } from '@chakra-ui/icons';
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 
 interface Props {
 	setIsDark: Dispatch<SetStateAction<boolean>>;
@@ -14,9 +14,16 @@ interface Props {
 
 const BarContent: FunctionComponent<Props> = ({ setIsDark, isDark }) => {
 	return (
-		<Box onClick={() => setIsDark(!isDark)}>
-			{isDark ? <MoonIcon /> : <SunIcon />}
-		</Box>
+		<Button
+			leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
+			onClick={() => setIsDark(!isDark)}
+		>
+			{isDark ? 'DARK' : 'LIGHT'}
+		</Button>
+		// <Box onClick={() => setIsDark(!isDark)}>
+
+		// 	{isDark ? <MoonIcon /> : <SunIcon />}
+		// </Box>
 	);
 };
 

@@ -49,7 +49,15 @@ const Sidebar: FunctionComponent<Props> = ({ isOpen, onClose, variant }) => {
 			</DrawerContent>
 		</Drawer>
 	) : (
-		<Box position='fixed' right={0} p={5} w='200px' top={0} h='100%' bg=''>
+		<Box
+			position='fixed'
+			right={0}
+			p={5}
+			w='200px'
+			top={0}
+			h='100%'
+			bg='gray'
+		>
 			<BarContent setIsDark={setIsDark} isDark={isDark} />
 		</Box>
 	);

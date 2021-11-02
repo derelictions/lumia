@@ -1,4 +1,4 @@
 export interface variant {
-	navigation: 'drawer' | 'sidebar';
+	navigation: 'base' | 'md' | 'lg';
 	navigationButton: boolean;
 }
