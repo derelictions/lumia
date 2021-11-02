@@ -33,7 +33,6 @@ import {
 	DrawerCloseButton,
 } from '@chakra-ui/react';
 
-import Sidebar from './sidebar';
 import { variant } from '../../types';
 
 // const Navbar: React.FC<{}> = () => {
@@ -87,19 +86,6 @@ const Navbar: FunctionComponent = ({}) => {
 				<Logo />
 				<Spacer />
 				<MenuList variant={variants} />
-				{/* <Button
-					leftIcon={<TriangleDownIcon />}
-					onClick={onOpen}
-					display={{ md: 'none' }}
-				>
-					Menu
-				</Button>
-
-				<Sidebar
-					variant={variants}
-					isOpen={isOpen}
-					onClose={onClose}
-				></Sidebar> */}
 			</Flex>
 		);
 	} else {
@@ -168,32 +154,16 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	);
 };
 
-// Drop down button for toggling menu on phone and tablet
-
-// For dark and light theme
-
 // function ThemeToggle({ toggle, isOpen }: any) {
 // 	return (
 // 	);
 // }
 
-// TODO: stack depeneding on responsive breakpts
-
-// function Header({}) {
-// 	const [isOpen, setIsOpen] = React.useState(false);
-// 	const toggle = () => setIsOpen(!isOpen);
-
-// 	return <MenuToggle toggle={toggle} isOpen={isOpen} />;
-// }
-
-// function MenuItem({ children, isLast, to = '/', ...rest }: any) {
-// 	return (
-// 		<Link onClick={() => router.push(to)}>
-// 			<Text display='block' {...rest}>
-// 				{children}
-// 			</Text>
-// 		</Link>
-// 	);
-// }
-
-// We create responsive breakpoints with the Stack component
+/*
+		<Button
+			leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
+			onClick={() => setIsDark(!isDark)}
+		>
+			{isDark ? 'DARK' : 'LIGHT'}
+		</Button>
+*/
