@@ -91,7 +91,7 @@ export default Navbar;
 
 const Logo: FunctionComponent = ({}) => {
 	return (
-		<HStack>
+		<HStack cursor={'pointer'}>
 			<Image w='50px' src='/assets/altl.png' alt='Lumia' />
 			<Text fontSize='lg' fontWeight='bold'>
 				Lumia
