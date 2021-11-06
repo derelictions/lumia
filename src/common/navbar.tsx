@@ -15,6 +15,8 @@ import {
 	Button,
 	VStack,
 	MenuItem,
+	Container,
+	filter,
 } from '@chakra-ui/react';
 import {
 	CloseIcon,
@@ -33,23 +35,7 @@ import {
 	DrawerCloseButton,
 } from '@chakra-ui/react';
 
-import { variant } from '../../types';
-
-// const Navbar: React.FC<{}> = () => {
-//     const router = useRouter();
-
-//     return (
-//         <>
-//             <Flex justify="space-between" m={4}>
-//                 <Heading onClick={() => router.push('/')} as="button">
-//                     Lumia
-//                 </Heading>
-//             </Flex>
-//         </>
-//     )
-
-// }
-
+import { variant } from '../types';
 interface MButtonProps {
 	isOpen: boolean;
 	onOpen: () => void;
@@ -65,39 +51,37 @@ interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: variant | undefined;
 }
 
+interface MainProps {
+	variant: variant | undefined;
+}
+
 const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
 const lgVariant: variant = { navigation: 'lg', navigationButton: true };
-
-const Navbar: FunctionComponent = ({}) => {
+const Navbar: FunctionComponent<MainProps> = ({ variant }) => {
 	// const [isOpen, setIsOpen] = useState(false);
 	// const { isOpen, onOpen, onClose } = useDisclosure();
 	const [isOpen, setIsOpen] = useState(false);
 	const onOpen = () => setIsOpen(!isOpen);
-	const variants = useBreakpointValue({
-		base: smVariant,
-		md: mdVariant,
-		lg: lgVariant,
-	});
 	const [isDark, setIsDark] = useState(false);
-	if (variants?.navigation === 'lg') {
+	if (variant?.navigation === 'lg') {
 		return (
-			<Flex>
+			<Flex p={4} margin-down={4}>
 				<Logo />
 				<Spacer />
-				<MenuList variant={variants} />
+				<MenuList variant={variant} />
 			</Flex>
 		);
 	} else {
 		return (
-			<VStack align='stretch'>
-				<Flex>
+			<VStack align={'stretch'} p={4} margin-down={4}>
+				<Flex align={'center'}>
 					<Logo />
 					<Spacer />
 					<MenuButton isOpen={isOpen} onOpen={onOpen} />
 				</Flex>
 				<Box display={isOpen ? 'block' : 'none'}>
-					<MenuList variant={variants} />
+					<MenuList variant={variant} />
 				</Box>
 			</VStack>
 		);
@@ -118,7 +102,7 @@ const Logo: FunctionComponent = ({}) => {
 
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<Box onClick={onOpen}>
+		<Box onClick={onOpen} cursor='pointer'>
 			{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
 		</Box>
 	);
@@ -140,17 +124,22 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	const kids = [
-		<MenuItem1 to='/'>Home</MenuItem1>,
+		// <MenuItem1 to='/'>Home</MenuItem1>,
 		<MenuItem1 to='/'>About</MenuItem1>,
+		<MenuItem1 to='/'>How it works?</MenuItem1>,
 		<MenuItem1 to='/'>Top List</MenuItem1>,
 		<MenuItem1 to='/'>
 			<Button>Sign Up</Button>
 		</MenuItem1>,
 	];
 	return variant?.navigation === 'base' ? (
-		<VStack align={'center'}>{kids}</VStack>
+		<VStack spacing={4} padding={4} align={'center'}>
+			{kids}
+		</VStack>
 	) : (
-		<HStack justify={'space-around'}>{kids}</HStack>
+		<HStack spacing={4} justify={'space-around'}>
+			{kids}
+		</HStack>
 	);
 };
 
