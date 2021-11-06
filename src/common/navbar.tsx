@@ -17,6 +17,7 @@ import {
 	MenuItem,
 	Container,
 	filter,
+	useColorModeValue,
 } from '@chakra-ui/react';
 import {
 	CloseIcon,
@@ -61,12 +62,20 @@ const lgVariant: variant = { navigation: 'lg', navigationButton: true };
 const Navbar: FunctionComponent<MainProps> = ({ variant }) => {
 	// const [isOpen, setIsOpen] = useState(false);
 	// const { isOpen, onOpen, onClose } = useDisclosure();
+	const bg = useColorModeValue('gray.50', 'gray.700');
 	const [isOpen, setIsOpen] = useState(false);
 	const onOpen = () => setIsOpen(!isOpen);
 	const [isDark, setIsDark] = useState(false);
 	if (variant?.navigation === 'lg') {
 		return (
-			<Flex p={4} margin-down={4}>
+			<Flex
+				p={4}
+				margin-down={4}
+				backgroundColor={bg}
+				as={'header'}
+				position={'relative'}
+				zIndex={1}
+			>
 				<Logo />
 				<Spacer />
 				<MenuList variant={variant} />
@@ -74,7 +83,15 @@ const Navbar: FunctionComponent<MainProps> = ({ variant }) => {
 		);
 	} else {
 		return (
-			<VStack align={'stretch'} p={4} margin-down={4}>
+			<VStack
+				align={'stretch'}
+				p={4}
+				margin-down={4}
+				backgroundColor={bg}
+				as={'header'}
+				position={'relative'}
+				zIndex={1}
+			>
 				<Flex align={'center'}>
 					<Logo />
 					<Spacer />

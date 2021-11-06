@@ -3,6 +3,7 @@ import Navbar from '../common/navbar';
 import Footer from '../common/Footer';
 import { variant } from '../types';
 import { useBreakpointValue } from '@chakra-ui/react';
+import Home from '../common/home';
 
 const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
@@ -16,7 +17,9 @@ export default function home() {
 	return (
 		<div>
 			<Navbar variant={variants} />
-			<main></main>
+			<main>
+				<Home variant={variants} />
+			</main>
 			<footer>
 				<Footer variant={variants} />
 			</footer>
