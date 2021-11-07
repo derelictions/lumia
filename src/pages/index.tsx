@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Navbar from '../common/navbar';
-import Footer from '../common/Footer';
+import Navbar from '../component/Navbar';
+import Footer from '../component/Footer';
 import { variant } from '../types';
 import { useBreakpointValue } from '@chakra-ui/react';
-import Home from '../common/home';
+import Home from '../component/Home';
 
 const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
