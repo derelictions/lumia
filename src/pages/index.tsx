@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Navbar from '../component/Navbar';
 import Footer from '../component/Footer';
 import { variant } from '../types';
-import { useBreakpointValue } from '@chakra-ui/react';
+import { Flex, useBreakpointValue } from '@chakra-ui/react';
 import Home from '../component/Home';
 import MainLayout from '../component/layouts/MainLayout';
 
@@ -17,19 +17,19 @@ export default function home() {
 	});
 	return (
 		<div>
-			<MainLayout variant={variants}>
+			<Flex
+				// wrap={'wrap'}
+				maxWidth={variants?.navigation === 'lg' ? '1200px' : 'auto'}
+				margin={'0 auto'}
+			>
 				<Navbar variant={variants} />
-			</MainLayout>
-			<main>
-				<MainLayout variant={variants}>
+				<main>
 					<Home variant={variants} />
-				</MainLayout>
-			</main>
-			<footer>
-				<MainLayout variant={variants}>
+				</main>
+				<footer>
 					<Footer variant={variants} />
-				</MainLayout>
-			</footer>
+				</footer>
+			</Flex>
 		</div>
 	);
 }
