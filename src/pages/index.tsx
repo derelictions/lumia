@@ -4,6 +4,7 @@ import Footer from '../component/Footer';
 import { variant } from '../types';
 import { useBreakpointValue } from '@chakra-ui/react';
 import Home from '../component/Home';
+import MainLayout from '../component/layouts/MainLayout';
 
 const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
@@ -16,12 +17,18 @@ export default function home() {
 	});
 	return (
 		<div>
-			<Navbar variant={variants} />
+			<MainLayout variant={variants}>
+				<Navbar variant={variants} />
+			</MainLayout>
 			<main>
-				<Home variant={variants} />
+				<MainLayout variant={variants}>
+					<Home variant={variants} />
+				</MainLayout>
 			</main>
 			<footer>
-				<Footer variant={variants} />
+				<MainLayout variant={variants}>
+					<Footer variant={variants} />
+				</MainLayout>
 			</footer>
 		</div>
 	);

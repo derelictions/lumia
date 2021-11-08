@@ -70,11 +70,13 @@ const Navbar: FunctionComponent<MainProps> = ({ variant }) => {
 				p={4}
 				margin-down={4}
 				backgroundColor={bg}
-				as={'header'}
+				// as={'header'}
 				position={'fixed'}
 				top={0}
+				// wrap={'wrap'} // TODO: figure out what to do with this.
 				left={0}
 				right={0}
+				as={'nav'}
 				zIndex={1}
 			>
 				<Logo />

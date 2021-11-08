@@ -49,6 +49,9 @@ const Home: FunctionComponent<HomeProps> = ({ variant }) => {
 			align='center'
 			justify={variant?.navigation === 'base' ? 'center' : 'space-around'}
 			height='100vh'
+			// margin={'0 auto'}
+			// maxWidth={variant?.navigation === 'lg' ? '1200px' : 'auto'}
+
 			// backgroundColor='gray.50'
 		>
 			<Stack
