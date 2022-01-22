@@ -18,6 +18,7 @@ import {
 	Container,
 	filter,
 	useColorModeValue,
+	useColorMode,
 } from '@chakra-ui/react';
 import {
 	CloseIcon,
@@ -53,7 +54,7 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 	const { isOpen, onToggle } = useDisclosure();
 	const variant = useBreakpointValue({ lg: 'lg', base: 'base' });
 	const bg = useColorModeValue('gray.50', 'gray.700');
-	// const [isDark, setIsDark] = useState(false);
+
 	return variant === 'lg' ? (
 		<Flex
 			p={4}
@@ -68,10 +69,12 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 			as={'nav'}
 			mb={8}
 			zIndex={1}
+			align={'center'}
 		>
 			<Logo />
 			<Spacer />
 			<MenuList variant={variant} />
+			<ColorButton />
 		</Flex>
 	) : (
 		<VStack
@@ -92,6 +95,7 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 				<Logo />
 				<Spacer />
 				<MenuButton isOpen={isOpen} onOpen={onToggle} />
+				<ColorButton />
 			</Flex>
 			<Box display={isOpen ? 'block' : 'none'}>
 				<MenuList variant={variant} />
@@ -114,9 +118,9 @@ const Logo: FunctionComponent = ({}) => {
 
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<Box onClick={onOpen} cursor='pointer'>
+		<Button onClick={onOpen}>
 			{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
-		</Box>
+		</Button>
 	);
 };
 
@@ -136,7 +140,6 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	const kids = [
-		// <MenuItem1 to='/'>Home</MenuItem1>,
 		<MenuItem1 to='/'>About</MenuItem1>,
 		<MenuItem1 to='/'>How it works?</MenuItem1>,
 		<MenuItem1 to='/'>Top List</MenuItem1>,
@@ -155,16 +158,13 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	);
 };
 
-// function ThemeToggle({ toggle, isOpen }: any) {
-// 	return (
-// 	);
-// }
-
-/*
-		<Button
-			leftIcon={isDark ? <MoonIcon /> : <SunIcon />}
-			onClick={() => setIsDark(!isDark)}
-		>
-			{isDark ? 'DARK' : 'LIGHT'}
-		</Button>
-*/
+const ColorButton: FunctionComponent<{}> = () => {
+	const { colorMode, toggleColorMode } = useColorMode();
+	return (
+		<Box paddingLeft={4}>
+			<Button onClick={toggleColorMode}>
+				{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+			</Button>
+		</Box>
+	);
+};

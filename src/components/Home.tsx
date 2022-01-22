@@ -35,10 +35,6 @@ import {
 } from '@chakra-ui/react';
 import { variant } from '../types';
 
-// interface HomeProps extends React.HTMLAttributes<HTMLElement> {
-// 	variant: variant | undefined;
-// }
-
 // home page component for the application
 interface HomeContentProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
@@ -49,7 +45,13 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 }) => {
 	return (
 		<>
-			<Stack spacing={8} w={{ base: '80%', md: '40%' }}>
+			<Stack
+				spacing={8}
+				w={{ base: '80%', md: '40%' }}
+				p={6}
+				// background={'gray.700'}
+				// rounded={'md'}
+			>
 				<Heading color={'#7df9ff'} as={'h2'}>
 					a new way to create art...
 				</Heading>
@@ -64,11 +66,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				</>
 				<Text fontSize={'md'}>Data collected from art work maybe mined.</Text>
 			</Stack>
-			<Box
-				align='center'
-				display='block'
-				// mt={variant?.navigation === 'base' ? 12 : 0}
-			>
+			<Box align='center' display='block'>
 				<Image
 					w={variant === 'lg' ? '100%' : '80%'}
 					alt='Golden gate bridge in Van Goghs Starry Night style using neural style transfer'
@@ -86,22 +84,16 @@ const Home: FunctionComponent<{}> = () => {
 	return (
 		//flex
 		<Flex
-			// direction={variant?.navigation === 'base' ? 'column-reverse' : 'row'}
 			direction={{ base: 'column-reverse', md: 'row' }}
-			// direction={'row'}
-			align='center'
 			justify={{ base: 'center', md: 'space-around' }}
-			// height='100vh'
 			minH={'100vh'}
-			// margin={'0 auto'}
-			// maxWidth={variantt === 'lg' ? '1200px' : 'auto'}
-			// backgroundColor='gray.50'
+			maxWidth={{ lg: '1200px' }}
 		>
 			{variant === 'sm' ? (
-				// <Stack direction={'column-reverse'}>
-				<HomeContent variant={variant} />
+				<Stack direction={'column-reverse'} justify={'center'}>
+					<HomeContent variant={variant} />
+				</Stack>
 			) : (
-				// </Stack>
 				<HStack justify={'space-around'}>
 					<HomeContent variant={variant} />
 				</HStack>
