@@ -16,6 +16,8 @@ import {
 	Button,
 	VStack,
 	MenuItem,
+	useColorModeValue,
+	Container,
 } from '@chakra-ui/react';
 import {
 	CloseIcon,
@@ -43,16 +45,17 @@ interface HomeContentProps extends React.HTMLAttributes<HTMLElement> {
 const HomeContent: FunctionComponent<HomeContentProps> = ({
 	variant: variant,
 }) => {
+	const headerColor = useColorModeValue('pink.300', 'cyan.300');
 	return (
 		<>
 			<Stack
 				spacing={8}
 				w={{ base: '80%', md: '40%' }}
-				p={6}
+				p={8}
 				// background={'gray.700'}
 				// rounded={'md'}
 			>
-				<Heading color={'#7df9ff'} as={'h2'}>
+				<Heading color={headerColor} as={'h2'}>
 					a new way to create art...
 				</Heading>
 				<Text fontSize={'xl'}>

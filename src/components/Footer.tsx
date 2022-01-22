@@ -8,14 +8,11 @@ import {
 	useColorModeValue,
 	VisuallyHidden,
 	Button,
+	useBreakpointValue,
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube, FaGithub } from 'react-icons/fa';
 import { ReactNode } from 'react';
 import { variant } from '../types';
-
-interface MainProps {
-	variant: variant | undefined;
-}
 
 interface SocialProps extends React.HTMLAttributes<HTMLElement> {
 	href: string;
@@ -41,7 +38,8 @@ const SocialButton: React.FunctionComponent<SocialProps> = ({
 	);
 };
 // TODO: add variant and delegate to top level
-const Footer: React.FunctionComponent<MainProps> = ({ children, variant }) => {
+const Footer: React.FunctionComponent<{}> = ({ children }) => {
+	const variant = useBreakpointValue({ lg: 'lg', base: 'base' });
 	const bg = useColorModeValue('gray.50', 'gray.700');
 	return (
 		<Box
@@ -58,7 +56,7 @@ const Footer: React.FunctionComponent<MainProps> = ({ children, variant }) => {
 			{/* <Container maxW={}> */}
 			<Container
 				as={Stack}
-				direction={variant?.navigation === 'base' ? 'column' : 'row'}
+				direction={variant === 'base' ? 'column' : 'row'}
 				align={'center'}
 				justify={'space-between'}
 				spacing={4}
@@ -70,22 +68,13 @@ const Footer: React.FunctionComponent<MainProps> = ({ children, variant }) => {
 					direction={'row'}
 					spacing={8}
 				>
-					<SocialButton
-						href={'https://www.instagram.com/'}
-						label={'Instagram'}
-					>
+					<SocialButton href={'https://www.instagram.com/'} label={'Instagram'}>
 						<FaInstagram />
 					</SocialButton>
-					<SocialButton
-						href={'https://www.twitter.com'}
-						label={'Twitter'}
-					>
+					<SocialButton href={'https://www.twitter.com'} label={'Twitter'}>
 						<FaTwitter />
 					</SocialButton>
-					<SocialButton
-						href={'https://www.github.com/'}
-						label={'Github'}
-					>
+					<SocialButton href={'https://www.github.com/'} label={'Github'}>
 						<FaGithub />
 					</SocialButton>
 				</Stack>

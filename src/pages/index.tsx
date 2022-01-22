@@ -32,7 +32,7 @@ export default function home() {
 				</main>
 			</Flex>
 			<footer>
-				<Footer variant={variants} />
+				<Footer />
 			</footer>
 		</div>
 	);

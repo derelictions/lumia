@@ -19,6 +19,7 @@ import {
 	filter,
 	useColorModeValue,
 	useColorMode,
+	Collapse,
 } from '@chakra-ui/react';
 import {
 	CloseIcon,
@@ -52,13 +53,13 @@ interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 
 const Navbar: FunctionComponent<{}> = ({}) => {
 	const { isOpen, onToggle } = useDisclosure();
-	const variant = useBreakpointValue({ lg: 'lg', base: 'base' });
+	const variant = useBreakpointValue({ lg: 'lg', base: 'base', md: 'md' });
 	const bg = useColorModeValue('gray.50', 'gray.700');
 
 	return variant === 'lg' ? (
 		<Flex
-			p={4}
-			margin-down={4}
+			p={2}
+			// margin-down={4}
 			backgroundColor={bg}
 			// as={'header'}
 			position={'fixed'}
@@ -67,7 +68,7 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 			left={0}
 			right={0}
 			as={'nav'}
-			mb={8}
+			// mb={8}
 			zIndex={1}
 			align={'center'}
 		>
@@ -80,26 +81,27 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 		<VStack
 			// direction={'row'}
 			align={'stretch'}
-			p={4}
-			margin-down={4}
+			p={2}
+			marginBottom={4}
 			backgroundColor={bg}
 			as={'header'}
-			mb={8}
+			// mb={8}
 			position={'fixed'}
 			top={0}
 			zIndex={1}
 			right={0}
 			left={0}
+			roundedBottom={isOpen ? 'md' : '0'}
 		>
 			<Flex align={'center'}>
 				<Logo />
 				<Spacer />
-				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 				<ColorButton />
+				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 			</Flex>
-			<Box display={isOpen ? 'block' : 'none'}>
+			<Collapse in={isOpen}>
 				<MenuList variant={variant} />
-			</Box>
+			</Collapse>
 		</VStack>
 	);
 };
@@ -118,9 +120,11 @@ const Logo: FunctionComponent = ({}) => {
 
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<Button onClick={onOpen}>
-			{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
-		</Button>
+		<Box paddingLeft={4}>
+			<Button onClick={onOpen}>
+				{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
+			</Button>
+		</Box>
 	);
 };
 
@@ -139,6 +143,7 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 };
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
+	const color = useColorModeValue('gray.100', 'gray.700');
 	const kids = [
 		<MenuItem1 to='/'>About</MenuItem1>,
 		<MenuItem1 to='/'>How it works?</MenuItem1>,
@@ -148,11 +153,23 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 		</MenuItem1>,
 	];
 	return variant === 'base' ? (
-		<VStack spacing={4} padding={4} align={'center'}>
+		<VStack
+			spacing={4}
+			padding={4}
+			rounded={4}
+			background={color}
+			align={'center'}
+		>
 			{kids}
 		</VStack>
 	) : (
-		<HStack spacing={4} justify={'space-around'}>
+		<HStack
+			spacing={4}
+			rounded={4}
+			padding={2}
+			justify={'space-around'}
+			background={color}
+		>
 			{kids}
 		</HStack>
 	);
@@ -161,7 +178,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 const ColorButton: FunctionComponent<{}> = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 	return (
-		<Box paddingLeft={4}>
+		<Box>
 			<Button onClick={toggleColorMode}>
 				{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
 			</Button>
