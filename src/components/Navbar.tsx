@@ -53,24 +53,26 @@ interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 
 const Navbar: FunctionComponent<{}> = ({}) => {
 	const { isOpen, onToggle } = useDisclosure();
-	const variant = useBreakpointValue({ lg: 'lg', base: 'base', md: 'md' });
+	const variant = useBreakpointValue({
+		lg: 'lg',
+		base: 'base',
+		md: 'md',
+		sm: 'sm',
+	});
 	const bg = useColorModeValue('gray.50', 'gray.700');
 
 	return variant === 'lg' ? (
 		<Flex
 			p={2}
-			// margin-down={4}
 			backgroundColor={bg}
-			// as={'header'}
 			position={'fixed'}
 			top={0}
-			// wrap={'wrap'} // TODO: figure out what to do with this.
 			left={0}
 			right={0}
 			as={'nav'}
-			// mb={8}
 			zIndex={1}
 			align={'center'}
+			// TODO: need wrap?
 		>
 			<Logo />
 			<Spacer />
@@ -79,13 +81,11 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 		</Flex>
 	) : (
 		<VStack
-			// direction={'row'}
 			align={'stretch'}
 			p={2}
 			marginBottom={4}
 			backgroundColor={bg}
 			as={'header'}
-			// mb={8}
 			position={'fixed'}
 			top={0}
 			zIndex={1}
@@ -143,7 +143,7 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 };
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
-	const color = useColorModeValue('gray.100', 'gray.700');
+	const color = useColorModeValue('gray.200', 'gray.800');
 	const kids = [
 		<MenuItem1 to='/'>About</MenuItem1>,
 		<MenuItem1 to='/'>How it works?</MenuItem1>,
@@ -168,7 +168,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 			rounded={4}
 			padding={2}
 			justify={'space-around'}
-			background={color}
+			// background={color}
 		>
 			{kids}
 		</HStack>

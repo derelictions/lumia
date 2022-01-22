@@ -52,7 +52,6 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				spacing={8}
 				w={{ base: '80%', md: '40%' }}
 				p={8}
-				// background={'gray.700'}
 				// rounded={'md'}
 			>
 				<Heading color={headerColor} as={'h2'}>
@@ -83,19 +82,23 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 };
 
 const Home: FunctionComponent<{}> = () => {
-	const variant = useBreakpointValue({ sm: 'sm', md: 'md', lg: 'lg' });
+	const variant = useBreakpointValue({
+		base: 'base',
+		sm: 'base',
+		md: 'md',
+		lg: 'lg',
+	});
 	return (
-		//flex
 		<Flex
 			direction={{ base: 'column-reverse', md: 'row' }}
 			justify={{ base: 'center', md: 'space-around' }}
 			minH={'100vh'}
 			maxWidth={{ lg: '1200px' }}
 		>
-			{variant === 'sm' ? (
-				<Stack direction={'column-reverse'} justify={'center'}>
+			{variant === 'base' ? (
+				<VStack direction={'column-reverse'} justify={'center'}>
 					<HomeContent variant={variant} />
-				</Stack>
+				</VStack>
 			) : (
 				<HStack justify={'space-around'}>
 					<HomeContent variant={variant} />
