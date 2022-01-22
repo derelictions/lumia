@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import Navbar from '../component/Navbar';
-import Footer from '../component/Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { variant } from '../types';
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import Home from '../component/Home';
-import MainLayout from '../component/layouts/MainLayout';
+import Home from '../components/Home';
 
 const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
@@ -19,17 +18,22 @@ export default function home() {
 		<div>
 			<Flex
 				// wrap={'wrap'}
-				maxWidth={variants?.navigation === 'lg' ? '1200px' : 'auto'}
+				// flexDirection={'column'}
+				// maxWidth={variants?.navigation === 'lg' ? '1200px' : 'auto'}
+				maxWidth={['auto', 'auto', 'auto', '1200px']}
 				margin={'0 auto'}
+				// direction={'row'}
+				// Flex={1}
+				align='center'
 			>
-				<Navbar variant={variants} />
+				<Navbar />
 				<main>
-					<Home variant={variants} />
+					<Home />
 				</main>
-				<footer>
-					<Footer variant={variants} />
-				</footer>
 			</Flex>
+			<footer>
+				<Footer variant={variants} />
+			</footer>
 		</div>
 	);
 }

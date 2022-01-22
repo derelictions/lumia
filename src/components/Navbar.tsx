@@ -36,77 +36,68 @@ import {
 	DrawerCloseButton,
 } from '@chakra-ui/react';
 
-import { variant } from '../types';
 interface MButtonProps {
 	isOpen: boolean;
 	onOpen: () => void;
 }
 
 interface MenuItemProps extends React.HTMLAttributes<HTMLElement> {
-	// children: FunctionComponent;
-	// isLast: boolean;
 	to: string;
 }
 
 interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
-	variant: variant | undefined;
+	variant: string | undefined;
 }
 
-interface MainProps {
-	variant: variant | undefined;
-}
-
-const Navbar: FunctionComponent<MainProps> = ({ variant }) => {
-	// const [isOpen, setIsOpen] = useState(false);
-	// const { isOpen, onOpen, onClose } = useDisclosure();
+const Navbar: FunctionComponent<{}> = ({}) => {
+	const { isOpen, onToggle } = useDisclosure();
+	const variant = useBreakpointValue({ lg: 'lg', base: 'base' });
 	const bg = useColorModeValue('gray.50', 'gray.700');
-	const [isOpen, setIsOpen] = useState(false);
-	const onOpen = () => setIsOpen(!isOpen);
-	const [isDark, setIsDark] = useState(false);
-	// move props here
-	if (variant?.navigation === 'lg') {
-		return (
-			<Flex
-				p={4}
-				margin-down={4}
-				backgroundColor={bg}
-				// as={'header'}
-				position={'fixed'}
-				top={0}
-				// wrap={'wrap'} // TODO: figure out what to do with this.
-				left={0}
-				right={0}
-				as={'nav'}
-				zIndex={1}
-			>
+	// const [isDark, setIsDark] = useState(false);
+	return variant === 'lg' ? (
+		<Flex
+			p={4}
+			margin-down={4}
+			backgroundColor={bg}
+			// as={'header'}
+			position={'fixed'}
+			top={0}
+			// wrap={'wrap'} // TODO: figure out what to do with this.
+			left={0}
+			right={0}
+			as={'nav'}
+			mb={8}
+			zIndex={1}
+		>
+			<Logo />
+			<Spacer />
+			<MenuList variant={variant} />
+		</Flex>
+	) : (
+		<VStack
+			// direction={'row'}
+			align={'stretch'}
+			p={4}
+			margin-down={4}
+			backgroundColor={bg}
+			as={'header'}
+			mb={8}
+			position={'fixed'}
+			top={0}
+			zIndex={1}
+			right={0}
+			left={0}
+		>
+			<Flex align={'center'}>
 				<Logo />
 				<Spacer />
-				<MenuList variant={variant} />
+				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 			</Flex>
-		);
-	} else {
-		return (
-			<VStack
-				align={'stretch'}
-				p={4}
-				margin-down={4}
-				backgroundColor={bg}
-				as={'header'}
-				position={'fixed'}
-				top={0}
-				zIndex={1}
-			>
-				<Flex align={'center'}>
-					<Logo />
-					<Spacer />
-					<MenuButton isOpen={isOpen} onOpen={onOpen} />
-				</Flex>
-				<Box display={isOpen ? 'block' : 'none'}>
-					<MenuList variant={variant} />
-				</Box>
-			</VStack>
-		);
-	}
+			<Box display={isOpen ? 'block' : 'none'}>
+				<MenuList variant={variant} />
+			</Box>
+		</VStack>
+	);
 };
 export default Navbar;
 
@@ -153,7 +144,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 			<Button>Log in</Button>
 		</MenuItem1>,
 	];
-	return variant?.navigation === 'base' ? (
+	return variant === 'base' ? (
 		<VStack spacing={4} padding={4} align={'center'}>
 			{kids}
 		</VStack>

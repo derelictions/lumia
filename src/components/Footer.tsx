@@ -47,11 +47,12 @@ const Footer: React.FunctionComponent<MainProps> = ({ children, variant }) => {
 		<Box
 			as='footer'
 			backgroundColor={bg}
-			padding={8}
-			position={'fixed'}
+			padding={4}
+			position={'absolute'}
 			bottom={0}
-			left={0}
-			right={0}
+			// left={0}
+			width={'100%'}
+			// right={0}
 			zIndex={1}
 		>
 			{/* <Container maxW={}> */}
