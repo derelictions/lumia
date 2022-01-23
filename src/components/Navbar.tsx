@@ -24,12 +24,18 @@ interface MButtonProps {
 	onOpen: () => void;
 }
 
-interface MenuItemProps extends React.HTMLAttributes<HTMLElement> {
+interface NavItemProps extends React.HTMLAttributes<HTMLElement> {
 	to: string;
+	path: string;
 }
 
 interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
+	path: string;
+}
+
+interface NavProps extends React.HTMLAttributes<HTMLElement> {
+	path: string;
 }
 
 const MotionImage = motion(Image);
@@ -67,11 +73,14 @@ const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	);
 };
 
-const MenuItem1: FunctionComponent<MenuItemProps> = ({
+const NavItem: FunctionComponent<NavItemProps> = ({
 	children,
 	to,
+	path,
 	...rest
 }) => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const active = to === path;
 	return (
 		<Link href={to}>
 			<Text display='block' {...rest}>
@@ -81,7 +90,7 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 	);
 };
 
-const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
+const MenuList: FunctionComponent<MenuListProps> = ({ variant, path }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
 	const bp = useBreakpointValue({
 		base: 'base',
@@ -92,12 +101,18 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	});
 	const kids = (
 		<>
-			<MenuItem1 to='/'>About</MenuItem1>
-			<MenuItem1 to='/'>How it works?</MenuItem1>
-			<MenuItem1 to='/'>Top List</MenuItem1>
-			<MenuItem1 to='/'>
+			<NavItem to='/' path={path}>
+				About
+			</NavItem>
+			<NavItem to='/' path={path}>
+				How it works?
+			</NavItem>
+			<NavItem to='/' path={path}>
+				Top List
+			</NavItem>
+			<NavItem to='/' path={path}>
 				<Button>Log in</Button>
-			</MenuItem1>
+			</NavItem>
 		</>
 	);
 	return bp === 'base' ? (
@@ -133,13 +148,14 @@ const ColorButton: FunctionComponent<{}> = () => {
 		</Box>
 	);
 };
-const Navbar: FunctionComponent<{}> = () => {
+const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 	const { isOpen, onToggle } = useDisclosure();
 	const variant = useBreakpointValue({
 		lg: 'lg',
 		base: 'base',
 		md: 'md',
 		sm: 'sm',
+		xl: 'lg',
 	});
 	const bg = useColorModeValue('gray.50', 'gray.700');
 
@@ -158,7 +174,7 @@ const Navbar: FunctionComponent<{}> = () => {
 		>
 			<Logo />
 			<Spacer />
-			<MenuList variant={variant} />
+			<MenuList variant={variant} path={path} />
 			<ColorButton />
 		</Flex>
 	) : (
@@ -184,7 +200,7 @@ const Navbar: FunctionComponent<{}> = () => {
 			</Flex>
 			<Collapse in={isOpen}>
 				{/* <Box display={isOpen ? 'block' : 'none'}> */}
-				<MenuList variant={variant} />
+				<MenuList variant={variant} path={path} />
 				{/* </Box> */}
 			</Collapse>
 		</VStack>
