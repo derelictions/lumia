@@ -32,10 +32,17 @@ interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
 }
 
+const MotionImage = motion(Image);
 const Logo: FunctionComponent = () => {
 	return (
 		<HStack cursor={'pointer'}>
-			<Image w='50px' src='/assets/altl.png' alt='Lumia' />
+			<MotionImage
+				animate={{ rotate: 360 }}
+				transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+				w='50px'
+				src='/assets/altl.png'
+				alt='Lumia'
+			/>
 			<Text fontSize='lg' fontWeight='bold'>
 				Lumia
 			</Text>
@@ -48,15 +55,15 @@ const mbvariants = {
 	closed: { rotate: 0 },
 };
 
+const MotionBox = motion(Box);
+
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<motion.div animate={isOpen ? 'open' : 'closed'} variants={mbvariants}>
-			<Box>
-				<Button onClick={onOpen}>
-					<TriangleDownIcon />
-				</Button>
-			</Box>
-		</motion.div>
+		<MotionBox animate={isOpen ? 'open' : 'closed'} variants={mbvariants}>
+			<Button onClick={onOpen}>
+				<TriangleDownIcon />
+			</Button>
+		</MotionBox>
 	);
 };
 
@@ -76,6 +83,13 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
+	const bp = useBreakpointValue({
+		base: 'base',
+		md: 'md',
+		lg: 'lg',
+		xl: 'xl',
+		sm: 'base',
+	});
 	const kids = (
 		<>
 			<MenuItem1 to='/'>About</MenuItem1>
@@ -86,7 +100,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 			</MenuItem1>
 		</>
 	);
-	return variant === 'base' ? (
+	return bp === 'base' ? (
 		<VStack
 			spacing={4}
 			padding={4}
