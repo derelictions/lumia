@@ -1,18 +1,12 @@
 import {
 	Box,
-	chakra,
 	Container,
 	Stack,
-	VStack,
 	Text,
 	useColorModeValue,
-	VisuallyHidden,
 	Button,
-	useBreakpointValue,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube, FaGithub } from 'react-icons/fa';
-import { ReactNode } from 'react';
-import { variant } from '../types';
+import { FaInstagram, FaTwitter, FaGithub } from 'react-icons/fa';
 
 interface SocialProps extends React.HTMLAttributes<HTMLElement> {
 	href: string;
@@ -38,7 +32,7 @@ const SocialButton: React.FunctionComponent<SocialProps> = ({
 	);
 };
 
-const Footer: React.FunctionComponent<{}> = ({ children }) => {
+const Footer: React.FunctionComponent<{}> = () => {
 	const bg = useColorModeValue('gray.50', 'gray.700');
 	return (
 		<Box

@@ -76,18 +76,16 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
-	const kids = [
-		// eslint-disable-next-line react/jsx-key
-		<MenuItem1 to='/'>About</MenuItem1>,
-		// eslint-disable-next-line react/jsx-key
-		<MenuItem1 to='/'>How it works?</MenuItem1>,
-		// eslint-disable-next-line react/jsx-key
-		<MenuItem1 to='/'>Top List</MenuItem1>,
-		// eslint-disable-next-line react/jsx-key
-		<MenuItem1 to='/'>
-			<Button>Log in</Button>
-		</MenuItem1>,
-	];
+	const kids = (
+		<>
+			<MenuItem1 to='/'>About</MenuItem1>
+			<MenuItem1 to='/'>How it works?</MenuItem1>
+			<MenuItem1 to='/'>Top List</MenuItem1>
+			<MenuItem1 to='/'>
+				<Button>Log in</Button>
+			</MenuItem1>
+		</>
+	);
 	return variant === 'base' ? (
 		<VStack
 			spacing={4}
