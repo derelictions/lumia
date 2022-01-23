@@ -67,7 +67,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 	const headerColor = useColorModeValue('pink.300', 'cyan.300');
 	return (
 		<>
-			<Stack spacing={[4, 8]} w={{ base: '80%', md: '40%' }} p={8}>
+			<Stack spacing={[4, 8]} w={{ base: '80%', md: '40%' }} pt={4} pb={6}>
 				<Heading color={headerColor} as={'h2'}>
 					a new way to create art...
 				</Heading>

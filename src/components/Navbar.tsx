@@ -83,7 +83,7 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 		<VStack
 			align={'stretch'}
 			p={2}
-			marginBottom={4}
+			marginBottom={6}
 			backgroundColor={bg}
 			as={'header'}
 			position={'sticky'}
@@ -146,9 +146,13 @@ const MenuItem1: FunctionComponent<MenuItemProps> = ({
 const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
 	const kids = [
+		// eslint-disable-next-line react/jsx-key
 		<MenuItem1 to='/'>About</MenuItem1>,
+		// eslint-disable-next-line react/jsx-key
 		<MenuItem1 to='/'>How it works?</MenuItem1>,
+		// eslint-disable-next-line react/jsx-key
 		<MenuItem1 to='/'>Top List</MenuItem1>,
+		// eslint-disable-next-line react/jsx-key
 		<MenuItem1 to='/'>
 			<Button>Log in</Button>
 		</MenuItem1>,
@@ -164,7 +168,13 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 			{kids}
 		</VStack>
 	) : (
-		<HStack spacing={4} rounded={4} padding={2} justify={'space-around'}>
+		<HStack
+			spacing={4}
+			rounded={4}
+			padding={2}
+			justify={'space-around'}
+			background={variant !== 'lg' ? color : undefined}
+		>
 			{kids}
 		</HStack>
 	);
