@@ -65,14 +65,14 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 		<Flex
 			p={2}
 			backgroundColor={bg}
-			position={'fixed'}
+			position={'sticky'}
+			width={'100vw'}
 			top={0}
 			left={0}
 			right={0}
-			as={'nav'}
+			as={'header'}
 			zIndex={1}
 			align={'center'}
-			// TODO: need wrap?
 		>
 			<Logo />
 			<Spacer />
@@ -86,7 +86,8 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 			marginBottom={4}
 			backgroundColor={bg}
 			as={'header'}
-			position={'fixed'}
+			position={'sticky'}
+			width={'100vw'}
 			top={0}
 			zIndex={1}
 			right={0}
@@ -120,7 +121,7 @@ const Logo: FunctionComponent = ({}) => {
 
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<Box paddingLeft={4}>
+		<Box>
 			<Button onClick={onOpen}>
 				{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
 			</Button>
@@ -163,13 +164,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 			{kids}
 		</VStack>
 	) : (
-		<HStack
-			spacing={4}
-			rounded={4}
-			padding={2}
-			justify={'space-around'}
-			// background={color}
-		>
+		<HStack spacing={4} rounded={4} padding={2} justify={'space-around'}>
 			{kids}
 		</HStack>
 	);
@@ -178,7 +173,7 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant }) => {
 const ColorButton: FunctionComponent<{}> = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 	return (
-		<Box>
+		<Box paddingRight={2}>
 			<Button onClick={toggleColorMode}>
 				{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
 			</Button>

@@ -38,6 +38,25 @@ import {
 import { variant } from '../types';
 
 // home page component for the application
+const Home: FunctionComponent<{}> = () => {
+	const variant = useBreakpointValue({
+		base: 'base',
+		sm: 'base',
+		md: 'md',
+		lg: 'lg',
+	});
+	return (
+		<Flex maxWidth={{ lg: '1200px' }}>
+			<Stack
+				direction={['column-reverse', 'row']}
+				justify={['center', 'space-around']}
+				align={'center'}
+			>
+				<HomeContent variant={variant} />
+			</Stack>
+		</Flex>
+	);
+};
 interface HomeContentProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
 }
@@ -48,12 +67,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 	const headerColor = useColorModeValue('pink.300', 'cyan.300');
 	return (
 		<>
-			<Stack
-				spacing={8}
-				w={{ base: '80%', md: '40%' }}
-				p={8}
-				// rounded={'md'}
-			>
+			<Stack spacing={[4, 8]} w={{ base: '80%', md: '40%' }} p={8}>
 				<Heading color={headerColor} as={'h2'}>
 					a new way to create art...
 				</Heading>
@@ -68,7 +82,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				</>
 				<Text fontSize={'md'}>Data collected from art work maybe mined.</Text>
 			</Stack>
-			<Box align='center' display='block'>
+			<Box align={'center'} display={'block'}>
 				<Image
 					w={variant === 'lg' ? '100%' : '80%'}
 					alt='Golden gate bridge in Van Goghs Starry Night style using neural style transfer'
@@ -78,33 +92,6 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				/>
 			</Box>
 		</>
-	);
-};
-
-const Home: FunctionComponent<{}> = () => {
-	const variant = useBreakpointValue({
-		base: 'base',
-		sm: 'base',
-		md: 'md',
-		lg: 'lg',
-	});
-	return (
-		<Flex
-			direction={{ base: 'column-reverse', md: 'row' }}
-			justify={{ base: 'center', md: 'space-around' }}
-			minH={'100vh'}
-			maxWidth={{ lg: '1200px' }}
-		>
-			{variant === 'base' ? (
-				<VStack direction={'column-reverse'} justify={'center'}>
-					<HomeContent variant={variant} />
-				</VStack>
-			) : (
-				<HStack justify={'space-around'}>
-					<HomeContent variant={variant} />
-				</HStack>
-			)}
-		</Flex>
 	);
 };
 
