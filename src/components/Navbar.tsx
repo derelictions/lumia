@@ -32,6 +32,7 @@ interface NavItemProps extends React.HTMLAttributes<HTMLElement> {
 interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
 	path: string;
+	isOpen: boolean;
 }
 
 interface NavProps extends React.HTMLAttributes<HTMLElement> {
@@ -90,6 +91,17 @@ const NavItem: FunctionComponent<NavItemProps> = ({
 	);
 };
 
+const MotionVStack = motion(VStack);
+const MotionHStack = motion(HStack);
+const NavListVariants = {
+	open: {
+		scale: 1,
+	},
+	closed: {
+		scale: 0.8,
+	},
+};
+
 const MenuList: FunctionComponent<MenuListProps> = ({ variant, path }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
 	const bp = useBreakpointValue({
@@ -115,26 +127,32 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant, path }) => {
 			</NavItem>
 		</>
 	);
+
+	const sharedProps = {
+		variants: NavListVariants,
+		transition: { duration: 0.8 },
+		spacing: 4,
+		rounded: 4,
+	};
+
 	return bp === 'base' ? (
-		<VStack
-			spacing={4}
+		<MotionVStack
 			padding={4}
-			rounded={4}
 			background={color}
 			align={'center'}
+			{...sharedProps}
 		>
 			{kids}
-		</VStack>
+		</MotionVStack>
 	) : (
-		<HStack
-			spacing={4}
-			rounded={4}
+		<MotionHStack
 			padding={2}
 			justify={'space-around'}
 			background={variant !== 'lg' ? color : undefined}
+			{...sharedProps}
 		>
 			{kids}
-		</HStack>
+		</MotionHStack>
 	);
 };
 
@@ -174,7 +192,7 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 		>
 			<Logo />
 			<Spacer />
-			<MenuList variant={variant} path={path} />
+			<MenuList variant={variant} path={path} isOpen={true} />
 			<ColorButton />
 		</Flex>
 	) : (
@@ -198,11 +216,19 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 				<ColorButton />
 				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 			</Flex>
-			<Collapse in={isOpen}>
-				{/* <Box display={isOpen ? 'block' : 'none'}> */}
-				<MenuList variant={variant} path={path} />
-				{/* </Box> */}
-			</Collapse>
+			{/* <Collapse in={isOpen}> */}
+			<MotionBox
+				initial={'closed'}
+				transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+				variants={{
+					open: { opacity: 1, height: 'auto' },
+					closed: { opacity: 0, height: 0 },
+				}}
+				animate={isOpen ? 'open' : 'closed'}
+			>
+				<MenuList variant={variant} path={path} isOpen={isOpen} />
+			</MotionBox>
+			{/* </Collapse> */}
 		</VStack>
 	);
 };
