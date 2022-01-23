@@ -9,6 +9,7 @@ const smVariant: variant = { navigation: 'base', navigationButton: true };
 const mdVariant: variant = { navigation: 'md', navigationButton: false };
 const lgVariant: variant = { navigation: 'lg', navigationButton: true };
 export default function home() {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const variants = useBreakpointValue({
 		base: smVariant,
 		md: mdVariant,
