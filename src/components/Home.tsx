@@ -36,6 +36,9 @@ import {
 	DrawerCloseButton,
 } from '@chakra-ui/react';
 import { variant } from '../types';
+import { motion } from 'framer-motion';
+
+const MotionBox = motion(Box);
 
 // home page component for the application
 const Home: FunctionComponent<{}> = () => {
@@ -64,11 +67,21 @@ interface HomeContentProps extends React.HTMLAttributes<HTMLElement> {
 const HomeContent: FunctionComponent<HomeContentProps> = ({
 	variant: variant,
 }) => {
-	const headerColor = useColorModeValue('pink.300', 'cyan.300');
+	// const headerColor = useColorModeValue('pink.300', 'cyan.300');
+	const headerColor = useColorModeValue(
+		'linear(to-l, pink.400, purple.400)',
+		'linear(to-l, cyan.300, blue.300)'
+	);
 	return (
 		<>
-			<Stack spacing={[4, 8]} w={{ base: '80%', md: '40%' }} pt={4} pb={6}>
-				<Heading color={headerColor} as={'h2'}>
+			<Stack
+				spacing={[4, 8]}
+				w={{ base: '80%', md: '40%' }}
+				pt={4}
+				pb={6}
+				pl={{ md: 8 }}
+			>
+				<Heading bgGradient={headerColor} bgClip={'text'} as={'h2'}>
 					a new way to create art...
 				</Heading>
 				<Text fontSize={'xl'}>
@@ -82,7 +95,12 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				</>
 				<Text fontSize={'md'}>Data collected from art work maybe mined.</Text>
 			</Stack>
-			<Box align={'center'} display={'block'}>
+			<MotionBox
+				initial={{ x: 100, opacity: 0 }}
+				animate={{ x: 0, opacity: 1 }}
+				align={'center'}
+				display={'block'}
+			>
 				<Image
 					w={variant === 'lg' ? '100%' : '80%'}
 					alt='Golden gate bridge in Van Goghs Starry Night style using neural style transfer'
@@ -90,7 +108,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 					rounded={'2rem'}
 					shadow={'2xl'}
 				/>
-			</Box>
+			</MotionBox>
 		</>
 	);
 };

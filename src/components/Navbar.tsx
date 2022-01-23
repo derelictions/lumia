@@ -38,6 +38,8 @@ import {
 	DrawerCloseButton,
 } from '@chakra-ui/react';
 
+import { motion } from 'framer-motion';
+
 interface MButtonProps {
 	isOpen: boolean;
 	onOpen: () => void;
@@ -101,11 +103,14 @@ const Navbar: FunctionComponent<{}> = ({}) => {
 				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 			</Flex>
 			<Collapse in={isOpen}>
+				{/* <Box display={isOpen ? 'block' : 'none'}> */}
 				<MenuList variant={variant} />
+				{/* </Box> */}
 			</Collapse>
 		</VStack>
 	);
 };
+
 export default Navbar;
 
 const Logo: FunctionComponent = ({}) => {
@@ -119,13 +124,20 @@ const Logo: FunctionComponent = ({}) => {
 	);
 };
 
+const mbvariants = {
+	open: { rotate: 180 },
+	closed: { rotate: 0 },
+};
+
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
-		<Box>
-			<Button onClick={onOpen}>
-				{isOpen ? <TriangleUpIcon /> : <TriangleDownIcon />}
-			</Button>
-		</Box>
+		<motion.div animate={isOpen ? 'open' : 'closed'} variants={mbvariants}>
+			<Box>
+				<Button onClick={onOpen}>
+					<TriangleDownIcon />
+				</Button>
+			</Box>
+		</motion.div>
 	);
 };
 
