@@ -48,8 +48,8 @@ const Home: FunctionComponent<{}> = () => {
 	return (
 		<Flex maxWidth={{ lg: '1200px' }}>
 			<Stack
-				direction={['column-reverse', 'row']}
-				justify={['center', 'space-around']}
+				direction={['column-reverse', 'column-reverse', 'row']}
+				justify={['center', 'center', 'space-around']}
 				align={'center'}
 			>
 				<HomeContent variant={variant} />
