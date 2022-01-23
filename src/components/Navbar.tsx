@@ -1,11 +1,8 @@
-import router from 'next/router';
-import React, { FunctionComponent, HTMLAttributes, useState } from 'react';
-import { AppProps } from 'next/app';
+import React, { FunctionComponent } from 'react';
 import {
 	Box,
 	Text,
 	Image,
-	Stack,
 	HStack,
 	Link,
 	useDisclosure,
@@ -14,29 +11,11 @@ import {
 	useBreakpointValue,
 	Button,
 	VStack,
-	MenuItem,
-	Container,
-	filter,
 	useColorModeValue,
 	useColorMode,
 	Collapse,
 } from '@chakra-ui/react';
-import {
-	CloseIcon,
-	TriangleDownIcon,
-	SunIcon,
-	MoonIcon,
-	TriangleUpIcon,
-} from '@chakra-ui/icons';
-import {
-	Drawer,
-	DrawerBody,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerOverlay,
-	DrawerContent,
-	DrawerCloseButton,
-} from '@chakra-ui/react';
+import { TriangleDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 
 import { motion } from 'framer-motion';
 
@@ -53,67 +32,7 @@ interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
 }
 
-const Navbar: FunctionComponent<{}> = ({}) => {
-	const { isOpen, onToggle } = useDisclosure();
-	const variant = useBreakpointValue({
-		lg: 'lg',
-		base: 'base',
-		md: 'md',
-		sm: 'sm',
-	});
-	const bg = useColorModeValue('gray.50', 'gray.700');
-
-	return variant === 'lg' ? (
-		<Flex
-			p={2}
-			backgroundColor={bg}
-			position={'sticky'}
-			width={'100vw'}
-			top={0}
-			left={0}
-			right={0}
-			as={'header'}
-			zIndex={1}
-			align={'center'}
-		>
-			<Logo />
-			<Spacer />
-			<MenuList variant={variant} />
-			<ColorButton />
-		</Flex>
-	) : (
-		<VStack
-			align={'stretch'}
-			p={2}
-			marginBottom={6}
-			backgroundColor={bg}
-			as={'header'}
-			position={'sticky'}
-			width={'100vw'}
-			top={0}
-			zIndex={1}
-			right={0}
-			left={0}
-			roundedBottom={isOpen ? 'md' : '0'}
-		>
-			<Flex align={'center'}>
-				<Logo />
-				<Spacer />
-				<ColorButton />
-				<MenuButton isOpen={isOpen} onOpen={onToggle} />
-			</Flex>
-			<Collapse in={isOpen}>
-				{/* <Box display={isOpen ? 'block' : 'none'}> */}
-				<MenuList variant={variant} />
-				{/* </Box> */}
-			</Collapse>
-		</VStack>
-	);
-};
-
-export default Navbar;
-
-const Logo: FunctionComponent = ({}) => {
+const Logo: FunctionComponent = () => {
 	return (
 		<HStack cursor={'pointer'}>
 			<Image w='50px' src='/assets/altl.png' alt='Lumia' />
@@ -202,3 +121,62 @@ const ColorButton: FunctionComponent<{}> = () => {
 		</Box>
 	);
 };
+const Navbar: FunctionComponent<{}> = () => {
+	const { isOpen, onToggle } = useDisclosure();
+	const variant = useBreakpointValue({
+		lg: 'lg',
+		base: 'base',
+		md: 'md',
+		sm: 'sm',
+	});
+	const bg = useColorModeValue('gray.50', 'gray.700');
+
+	return variant === 'lg' ? (
+		<Flex
+			p={2}
+			backgroundColor={bg}
+			position={'sticky'}
+			width={'100vw'}
+			top={0}
+			left={0}
+			right={0}
+			as={'header'}
+			zIndex={1}
+			align={'center'}
+		>
+			<Logo />
+			<Spacer />
+			<MenuList variant={variant} />
+			<ColorButton />
+		</Flex>
+	) : (
+		<VStack
+			align={'stretch'}
+			p={2}
+			marginBottom={6}
+			backgroundColor={bg}
+			as={'header'}
+			position={'sticky'}
+			width={'100vw'}
+			top={0}
+			zIndex={1}
+			right={0}
+			left={0}
+			roundedBottom={isOpen ? 'md' : '0'}
+		>
+			<Flex align={'center'}>
+				<Logo />
+				<Spacer />
+				<ColorButton />
+				<MenuButton isOpen={isOpen} onOpen={onToggle} />
+			</Flex>
+			<Collapse in={isOpen}>
+				{/* <Box display={isOpen ? 'block' : 'none'}> */}
+				<MenuList variant={variant} />
+				{/* </Box> */}
+			</Collapse>
+		</VStack>
+	);
+};
+
+export default Navbar;
