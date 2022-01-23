@@ -37,37 +37,26 @@ const SocialButton: React.FunctionComponent<SocialProps> = ({
 		</Button>
 	);
 };
-// TODO: add variant and delegate to top level
+
 const Footer: React.FunctionComponent<{}> = ({ children }) => {
-	const variant = useBreakpointValue({ lg: 'lg', base: 'base' });
 	const bg = useColorModeValue('gray.50', 'gray.700');
 	return (
 		<Box
-			as='footer'
+			as={'footer'}
 			backgroundColor={bg}
 			padding={4}
-			position={'absolute'}
 			bottom={0}
-			// left={0}
-			width={'100%'}
-			// right={0}
-			zIndex={1}
+			width={'100vw'}
 		>
-			{/* <Container maxW={}> */}
 			<Container
 				as={Stack}
-				direction={variant === 'base' ? 'column' : 'row'}
+				direction={['column', 'row']}
 				align={'center'}
 				justify={'space-between'}
 				spacing={4}
 			>
 				<Text>© 2021 Omar. All rights reserved</Text>
-				<Stack
-					// align={'center'}
-					// justify={'space-between'}
-					direction={'row'}
-					spacing={8}
-				>
+				<Stack direction={'row'} spacing={8}>
 					<SocialButton href={'https://www.instagram.com/'} label={'Instagram'}>
 						<FaInstagram />
 					</SocialButton>
