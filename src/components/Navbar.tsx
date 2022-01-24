@@ -10,10 +10,9 @@ import {
 	Spacer,
 	useBreakpointValue,
 	Button,
-	VStack,
 	useColorModeValue,
 	useColorMode,
-	Collapse,
+	Stack,
 } from '@chakra-ui/react';
 import { TriangleDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 
@@ -91,8 +90,7 @@ const NavItem: FunctionComponent<NavItemProps> = ({
 	);
 };
 
-const MotionVStack = motion(VStack);
-const MotionHStack = motion(HStack);
+const MotionStack = motion(Stack);
 const NavListVariants = {
 	open: {
 		scale: 1,
@@ -102,15 +100,8 @@ const NavListVariants = {
 	},
 };
 
-const MenuList: FunctionComponent<MenuListProps> = ({ variant, path }) => {
+const MenuList: FunctionComponent<MenuListProps> = ({ path }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
-	const bp = useBreakpointValue({
-		base: 'base',
-		md: 'md',
-		lg: 'lg',
-		xl: 'xl',
-		sm: 'base',
-	});
 	const kids = (
 		<>
 			<NavItem to='/' path={path}>
@@ -135,24 +126,17 @@ const MenuList: FunctionComponent<MenuListProps> = ({ variant, path }) => {
 		rounded: 4,
 	};
 
-	return bp === 'base' ? (
-		<MotionVStack
-			padding={4}
-			background={color}
-			align={'center'}
-			{...sharedProps}
-		>
-			{kids}
-		</MotionVStack>
-	) : (
-		<MotionHStack
-			padding={2}
+	return (
+		<MotionStack
+			padding={[4, 2]}
+			background={[color, color, color, 'transparent']}
+			direction={['column', 'column', 'row']}
+			align={['center']}
 			justify={'space-around'}
-			background={variant !== 'lg' ? color : undefined}
 			{...sharedProps}
 		>
 			{kids}
-		</MotionHStack>
+		</MotionStack>
 	);
 };
 
@@ -196,18 +180,17 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 			<ColorButton />
 		</Flex>
 	) : (
-		<VStack
+		<Stack
+			direction={'column'}
 			align={'stretch'}
 			p={2}
 			marginBottom={6}
 			backgroundColor={bg}
-			as={'header'}
+			as={'nav'}
 			position={'sticky'}
 			width={'100vw'}
 			top={0}
 			zIndex={1}
-			right={0}
-			left={0}
 			roundedBottom={isOpen ? 'md' : '0'}
 		>
 			<Flex align={'center'}>
@@ -216,7 +199,6 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 				<ColorButton />
 				<MenuButton isOpen={isOpen} onOpen={onToggle} />
 			</Flex>
-			{/* <Collapse in={isOpen}> */}
 			<MotionBox
 				initial={'closed'}
 				transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
@@ -228,8 +210,7 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 			>
 				<MenuList variant={variant} path={path} isOpen={isOpen} />
 			</MotionBox>
-			{/* </Collapse> */}
-		</VStack>
+		</Stack>
 	);
 };
 
