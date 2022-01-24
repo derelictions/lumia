@@ -12,6 +12,7 @@ import {
 	Button,
 	useColorModeValue,
 } from '@chakra-ui/react';
+import NextImage from 'next/image';
 import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
@@ -58,7 +59,7 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 				display={'block'}
 			>
 				<Image
-					w={variant === 'lg' ? '100%' : '80%'}
+					w={['80%', '80%', '80%', '100%']}
 					alt='Golden gate bridge in Van Goghs Starry Night style using neural style transfer'
 					src={'/assets/hero_img_dark.png'}
 					rounded={'2rem'}

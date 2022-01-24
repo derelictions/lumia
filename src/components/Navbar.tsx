@@ -15,8 +15,12 @@ import {
 	Stack,
 } from '@chakra-ui/react';
 import { TriangleDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
+import NextLink from 'next/link';
 
 import { motion } from 'framer-motion';
+const MotionBox = motion(Box);
+const MotionImage = motion(Image);
+const MotionStack = motion(Stack);
 
 interface MButtonProps {
 	isOpen: boolean;
@@ -38,21 +42,22 @@ interface NavProps extends React.HTMLAttributes<HTMLElement> {
 	path: string;
 }
 
-const MotionImage = motion(Image);
 const Logo: FunctionComponent = () => {
 	return (
-		<HStack cursor={'pointer'}>
-			<MotionImage
-				animate={{ rotate: 360 }}
-				transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-				w='50px'
-				src='/assets/altl.png'
-				alt='Lumia'
-			/>
-			<Text fontSize='lg' fontWeight='bold'>
-				Lumia
-			</Text>
-		</HStack>
+		<NextLink href='/'>
+			<HStack cursor={'pointer'}>
+				<MotionImage
+					animate={{ rotate: 360 }}
+					transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+					w='50px'
+					src='/assets/altl.png'
+					alt='Lumia'
+				/>
+				<Text fontSize='lg' fontWeight='bold'>
+					Lumia
+				</Text>
+			</HStack>
+		</NextLink>
 	);
 };
 
@@ -60,8 +65,6 @@ const mbvariants = {
 	open: { rotate: 180 },
 	closed: { rotate: 0 },
 };
-
-const MotionBox = motion(Box);
 
 const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 	return (
@@ -82,15 +85,16 @@ const NavItem: FunctionComponent<NavItemProps> = ({
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const active = to === path;
 	return (
-		<Link href={to}>
-			<Text display='block' {...rest}>
-				{children}
-			</Text>
-		</Link>
+		<NextLink href={to} passHref>
+			<Link href={to}>
+				<Text display='block' {...rest}>
+					{children}
+				</Text>
+			</Link>
+		</NextLink>
 	);
 };
 
-const MotionStack = motion(Stack);
 const NavListVariants = {
 	open: {
 		scale: 1,
@@ -104,14 +108,14 @@ const MenuList: FunctionComponent<MenuListProps> = ({ path }) => {
 	const color = useColorModeValue('gray.200', 'gray.800');
 	const kids = (
 		<>
-			<NavItem to='/' path={path}>
+			<NavItem to='/about' path={path}>
 				About
 			</NavItem>
-			<NavItem to='/' path={path}>
+			<NavItem to='/how' path={path}>
 				How it works?
 			</NavItem>
-			<NavItem to='/' path={path}>
-				Top List
+			<NavItem to='/hof' path={path}>
+				Hall of Fame
 			</NavItem>
 			<NavItem to='/' path={path}>
 				<Button>Log in</Button>
@@ -184,14 +188,14 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 			direction={'column'}
 			align={'stretch'}
 			p={2}
-			marginBottom={6}
+			marginBottom={4}
 			backgroundColor={bg}
 			as={'nav'}
 			position={'sticky'}
 			width={'100vw'}
 			top={0}
 			zIndex={1}
-			roundedBottom={isOpen ? 'md' : '0'}
+			roundedBottom={isOpen ? 'lg' : '0'}
 		>
 			<Flex align={'center'}>
 				<Logo />
@@ -201,10 +205,17 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 			</Flex>
 			<MotionBox
 				initial={'closed'}
-				transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+				transition={{
+					duration: 0.8,
+					ease: [0.04, 0.62, 0.23, 0.98],
+				}}
 				variants={{
-					open: { opacity: 1, height: 'auto' },
-					closed: { opacity: 0, height: 0 },
+					open: { opacity: 1, height: 'auto', margin: 8 },
+					closed: {
+						opacity: 0,
+						height: 0,
+						margin: 0,
+					},
 				}}
 				animate={isOpen ? 'open' : 'closed'}
 			>
