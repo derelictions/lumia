@@ -29,17 +29,11 @@ interface MButtonProps {
 
 interface NavItemProps extends React.HTMLAttributes<HTMLElement> {
 	to: string;
-	path: string;
 }
 
 interface MenuListProps extends React.HTMLAttributes<HTMLElement> {
 	variant: string | undefined;
-	path: string;
 	isOpen: boolean;
-}
-
-interface NavProps extends React.HTMLAttributes<HTMLElement> {
-	path: string;
 }
 
 const Logo: FunctionComponent = () => {
@@ -79,11 +73,8 @@ const MenuButton: FunctionComponent<MButtonProps> = ({ isOpen, onOpen }) => {
 const NavItem: FunctionComponent<NavItemProps> = ({
 	children,
 	to,
-	path,
 	...rest
 }) => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const active = to === path;
 	return (
 		<NextLink href={to} passHref>
 			<Link href={to}>
@@ -104,20 +95,14 @@ const NavListVariants = {
 	},
 };
 
-const MenuList: FunctionComponent<MenuListProps> = ({ path }) => {
+const MenuList: FunctionComponent<MenuListProps> = () => {
 	const color = useColorModeValue('gray.200', 'gray.800');
 	const kids = (
 		<>
-			<NavItem to='/about' path={path}>
-				About
-			</NavItem>
-			<NavItem to='/how' path={path}>
-				How it works?
-			</NavItem>
-			<NavItem to='/hof' path={path}>
-				Hall of Fame
-			</NavItem>
-			<NavItem to='/' path={path}>
+			<NavItem to='/about'>About</NavItem>
+			<NavItem to='/how'>How it works?</NavItem>
+			<NavItem to='/hof'>Hall of Fame</NavItem>
+			<NavItem to='/'>
 				<Button>Log in</Button>
 			</NavItem>
 		</>
@@ -154,7 +139,7 @@ const ColorButton: FunctionComponent<{}> = () => {
 		</Box>
 	);
 };
-const Navbar: FunctionComponent<NavProps> = ({ path }) => {
+const Navbar: FunctionComponent<{}> = () => {
 	const { isOpen, onToggle } = useDisclosure();
 	const variant = useBreakpointValue({
 		lg: 'lg',
@@ -180,7 +165,7 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 		>
 			<Logo />
 			<Spacer />
-			<MenuList variant={variant} path={path} isOpen={true} />
+			<MenuList variant={variant} isOpen={true} />
 			<ColorButton />
 		</Flex>
 	) : (
@@ -219,7 +204,7 @@ const Navbar: FunctionComponent<NavProps> = ({ path }) => {
 				}}
 				animate={isOpen ? 'open' : 'closed'}
 			>
-				<MenuList variant={variant} path={path} isOpen={isOpen} />
+				<MenuList variant={variant} isOpen={isOpen} />
 			</MotionBox>
 		</Stack>
 	);

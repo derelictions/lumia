@@ -1,14 +1,9 @@
 import { FunctionComponent } from 'react';
-import { Router } from 'next/router';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { Flex } from '@chakra-ui/react';
 
-interface LayoutProps {
-	router: Router;
-}
-
-const Layout: FunctionComponent<LayoutProps> = ({ router, children }) => {
+const Layout: FunctionComponent<{}> = ({ children }) => {
 	return (
 		<div>
 			<Flex
@@ -19,7 +14,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ router, children }) => {
 				align={'center'}
 				justify={'space-between'}
 			>
-				<Navbar path={router.asPath} />
+				<Navbar />
 				<main>{children}</main>
 				<Footer />
 			</Flex>

@@ -8,23 +8,16 @@ import {
 	Image,
 	Stack,
 	Flex,
-	useBreakpointValue,
 	Button,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import NextImage from 'next/image';
+// import NextImage from 'next/image';
 import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
 
-interface HomeContentProps extends React.HTMLAttributes<HTMLElement> {
-	variant: string | undefined;
-}
-
-const HomeContent: FunctionComponent<HomeContentProps> = ({
-	variant: variant,
-}) => {
-	// const headerColor = useColorModeValue('pink.300', 'cyan.300');
+const HomeContent: FunctionComponent<{}> = () => {
+	// TODO: figure out how to optimize the image using NEXT
 	const headerColor = useColorModeValue(
 		'linear(to-l, pink.400, purple.400)',
 		'linear(to-l, cyan.300, blue.300)'
@@ -71,12 +64,6 @@ const HomeContent: FunctionComponent<HomeContentProps> = ({
 };
 
 const Home: FunctionComponent<{}> = () => {
-	const variant = useBreakpointValue({
-		base: 'base',
-		sm: 'base',
-		md: 'md',
-		lg: 'lg',
-	});
 	return (
 		<Flex maxWidth={{ lg: '1200px' }}>
 			<Stack
@@ -84,7 +71,7 @@ const Home: FunctionComponent<{}> = () => {
 				justify={['center', 'center', 'space-around']}
 				align={'center'}
 			>
-				<HomeContent variant={variant} />
+				<HomeContent />
 			</Stack>
 		</Flex>
 	);

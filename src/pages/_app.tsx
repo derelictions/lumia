@@ -6,7 +6,7 @@ import Layout from '../components/layouts/main';
 function MyApp({ Component, pageProps, router }: AppProps) {
 	return (
 		<ChakraProvider theme={theme}>
-			<Layout router={router}>
+			<Layout>
 				<AnimatePresence exitBeforeEnter initial={true}>
 					<Component {...pageProps} key={router.route} />
 				</AnimatePresence>
