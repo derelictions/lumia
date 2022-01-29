@@ -11,10 +11,10 @@ import {
 	Button,
 	useColorModeValue,
 } from '@chakra-ui/react';
-// import NextImage from 'next/image';
-import { motion } from 'framer-motion';
 
-const MotionBox = motion(Box);
+// import NextImage from 'next/image';
+// import { motion } from 'framer-motion';
+// const MotionBox = motion(Box);
 
 const HomeContent: FunctionComponent<{}> = () => {
 	// TODO: figure out how to optimize the image using NEXT
@@ -45,12 +45,13 @@ const HomeContent: FunctionComponent<{}> = () => {
 				</>
 				<Text fontSize={'md'}>Data collected from art work maybe mined.</Text>
 			</Stack>
-			<MotionBox
+			{/* <MotionBox
 				initial={{ x: 100, opacity: 0 }}
 				animate={{ x: 0, opacity: 1 }}
 				align={'center'}
 				display={'block'}
-			>
+			> */}
+			<Box align={'center'} display={'block'}>
 				<Image
 					w={['80%', '80%', '80%', '100%']}
 					alt='Golden gate bridge in Van Goghs Starry Night style using neural style transfer'
@@ -58,7 +59,8 @@ const HomeContent: FunctionComponent<{}> = () => {
 					rounded={'2rem'}
 					shadow={'2xl'}
 				/>
-			</MotionBox>
+			</Box>
+			{/* </MotionBox> */}
 		</>
 	);
 };
