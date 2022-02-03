@@ -227,11 +227,6 @@ output = NeuralStyleTransfer(cnn, cnn_normalization_mean, cnn_normalization_std,
 
 plt.figure()
 imgshow(output)
-
-            
-            
-        
-
-
-
 # %%
+
+unloader(output.cpu().clone().squeeze()).save('artifacts/output.jpg')
