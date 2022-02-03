@@ -2,7 +2,11 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import nookies from 'nookies';
 import { auth } from './firebase';
 // import firebase from 'firebase/app';
-import { onIdTokenChanged } from 'firebase/auth';
+import {
+	GoogleAuthProvider,
+	onIdTokenChanged,
+	signInWithPopup,
+} from 'firebase/auth';
 
 const AuthContext = createContext({});
 
@@ -24,6 +28,16 @@ export const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
 	return (
 		<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
 	);
+};
+
+const AuthService = {
+	signInWithGoogle: async () => {
+		const provider = new GoogleAuthProvider();
+		return signInWithPopup(auth, provider);
+	},
+	signInWithEmailAndPassword: async (email, password) => {},
+	signUpWithEmailAndPassword: async () => {},
+	signOut: async () => {},
 };
 
 export const useAuth = () => useContext(AuthContext);
