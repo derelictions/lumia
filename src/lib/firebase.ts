@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // import 'firebase/store';
 
 const clientCredentials = {
@@ -13,6 +13,9 @@ const clientCredentials = {
 	measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+// export default function firebaseClient() {
+// 	return initializeApp(clientCredentials);
+// }
 const firebase = initializeApp(clientCredentials);
 export const authContext = getAuth(firebase);
 
