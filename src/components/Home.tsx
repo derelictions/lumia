@@ -1,5 +1,3 @@
-// import router from 'next/router';
-// import { AppProps } from 'next/app';
 import React, { FunctionComponent } from 'react';
 import {
 	Box,

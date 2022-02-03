@@ -102,7 +102,7 @@ const MenuList: FunctionComponent<MenuListProps> = () => {
 			<NavItem to='/about'>About</NavItem>
 			<NavItem to='/how'>How it works?</NavItem>
 			<NavItem to='/hof'>Hall of Fame</NavItem>
-			<NavItem to='/auth'>
+			<NavItem to='/login'>
 				<Button>Log in</Button>
 			</NavItem>
 		</>

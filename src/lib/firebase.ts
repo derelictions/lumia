@@ -1,7 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import 'firebase/store';
 
 const clientCredentials = {
 	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
