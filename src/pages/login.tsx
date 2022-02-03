@@ -1,9 +1,8 @@
 import React from 'react';
-import { auth } from '../lib/firebase';
+import { authService } from '../lib/firebase';
 import { Box, Button, Heading, Stack, useToast } from '@chakra-ui/react';
 
 export default function LoginPage() {
-	const provider = new GoogleAuthProvider();
 	const toast = useToast();
 	return (
 		<Stack>

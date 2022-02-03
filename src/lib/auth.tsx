@@ -30,7 +30,7 @@ export const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
 	);
 };
 
-const AuthService = {
+export const authService = {
 	signInWithGoogle: async () => {
 		const provider = new GoogleAuthProvider();
 		return signInWithPopup(auth, provider);
