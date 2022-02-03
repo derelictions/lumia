@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import nookies from 'nookies';
-import { authContext } from './firebase';
+import { auth } from './firebase';
 // import firebase from 'firebase/app';
 import { onIdTokenChanged } from 'firebase/auth';
 
@@ -10,7 +10,7 @@ export const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
 	const [user, setUser] = useState(null);
 	useEffect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
-		return onIdTokenChanged(authContext, async (user) => {
+		return onIdTokenChanged(auth, async (user) => {
 			if (!user) {
 				setUser(null);
 				nookies.set(undefined, 'token', '', {});

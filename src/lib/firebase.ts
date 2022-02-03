@@ -12,4 +12,4 @@ const clientCredentials = {
 };
 
 const firebase = initializeApp(clientCredentials);
-export const authContext = getAuth(firebase);
+export const auth = getAuth(firebase);
