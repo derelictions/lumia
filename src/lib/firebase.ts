@@ -11,10 +11,5 @@ const clientCredentials = {
 	measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// export default function firebaseClient() {
-// 	return initializeApp(clientCredentials);
-// }
 const firebase = initializeApp(clientCredentials);
 export const authContext = getAuth(firebase);
-
-export default firebase;
