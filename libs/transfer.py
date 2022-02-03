@@ -22,16 +22,13 @@ import copy
 
 ## set GPU if available 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# %%
 
-# we use some demo images for the demo and initial commit, but actual
-# images are retreived from the file system as the script is invoked 
 
 # %%
 
 # image utilities 
 
-imgsiz = 512 if device == 'cuda' else 128
+imgsiz = 1024 if device == 'cuda' else 512
 
 loader = transforms.Compose([
     transforms.Resize(imgsiz),
@@ -45,11 +42,33 @@ def image_load(image_path):
     image = loader(image).unsqueeze(0)
     return image.to(device, torch.float)
 
-def imgshow(tensor):
+def imgshow(tensor, title=None):
     image = tensor.cpu().clone()
     image = unloader(image.squeeze(0))
     plt.imshow(image)
+    plt.grid(b=None)
+    plt.axis('off')
+    if title:
+        plt.title(title)
     
+# %%
+
+# we use some demo images for the demo and initial commit, but actual
+# images are retreived from the file system as the script is invoked 
+
+content_img = image_load('artifacts/content.jpeg')
+style_img = image_load('artifacts/style.jpeg')
+
+print(f'Style size: {style_img.size()} and Content size: {content_img.size()}')
+
+plt.figure()
+imgshow(style_img, title='Style Image')
+
+plt.figure()
+imgshow(content_img, title='Content Image')
+
+input_img = content_img.clone()
+
 # %%
 
 ## content and style functions
@@ -94,7 +113,7 @@ class Normalize(nn.Module):
         return (img - self.mean) / self.std
 
 # %% 
-## actual model
+## model extraction
 
 content_layers_default = ['conv_4']
 style_layers_default = [f'conv_{i}' for i in range(1, 6)]
@@ -120,7 +139,7 @@ def build_model(cnn, normalization_mean, normalization_std,
             name = f'conv_{i}'
         elif isinstance(layer, nn.ReLU):
             name = f'relu_{i}'
-            layer = nn.ReLU(in_place=False)
+            layer = nn.ReLU(inplace=False)
         elif isinstance(layer, nn.MaxPool2d):
             name = f'bn_{i}'
         else:
@@ -135,7 +154,7 @@ def build_model(cnn, normalization_mean, normalization_std,
             content_losses.append(content_loss)
         
         if name in style_layers:
-            target_feature = model(style_layers).detach()
+            target_feature = model(style_img).detach()
             style_loss = StyleLoss(target_feature)
             model.add_module(f'style_loss_{i}', style_loss)
             style_losses.append(style_loss)
@@ -147,7 +166,72 @@ def build_model(cnn, normalization_mean, normalization_std,
     model = model[:(i + 1)]
     return model, style_losses, content_losses
 
+def input_optim(tensor):
+    return optim.LBFGS([tensor])
 
+# %%
+
+# neural style transfer
+
+def NeuralStyleTransfer(cnn, normalization_mean, normalization_std,
+                        content_img, style_img, input_img, num_steps=300,
+                        style_weight=1000000, content_weight=1):
+    model, style_losses, content_losses = build_model(cnn, normalization_mean, normalization_std, style_img, content_img)
+    input_img.requires_grad_(True)
+    model.requires_grad_(False)
+    
+    optimizer = input_optim(input_img)
+    print(f'Optimizing for {num_steps} steps')
+    run = [0]
+    while run[0] <= num_steps:
+        
+        def closure():
+            with torch.no_grad():
+                input_img.clamp_(0, 1)
+            
+            optimizer.zero_grad()
+            model(input_img)
+            style_score = 0
+            content_score = 0
+
+            for sl in style_losses:
+                style_score+=sl.loss
+            for cl in content_losses:
+                content_score+=cl.loss
+            
+            style_score*=style_weight
+            content_score*=content_weight
+            
+            loss = style_score + content_score
+            loss.backward()
+            
+            run[0] += 1 
+            if run[0] % 50 == 0:
+                print(f'Iteration: {run}')
+                print(f'Style loss: {style_score.item():.4f} Content loss: {content_score.item():.4f}')
+                print()
+                
+            return loss.item()
+        optimizer.step(closure)
+        
+    with torch.no_grad():
+        input_img.clamp_(0, 1)
+    
+    return input_img
+
+# %%
+
+# run algorithm on test images
+
+output = NeuralStyleTransfer(cnn, cnn_normalization_mean, cnn_normalization_std, content_img, style_img, input_img)
+
+plt.figure()
+imgshow(output)
+
+            
+            
         
 
 
+
+# %%
