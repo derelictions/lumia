@@ -6,6 +6,9 @@ import {
 	GoogleAuthProvider,
 	onIdTokenChanged,
 	signInWithPopup,
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
+	signOut,
 } from 'firebase/auth';
 
 const AuthContext = createContext({});
@@ -33,11 +36,23 @@ export const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
 export const authService = {
 	signInWithGoogle: async () => {
 		const provider = new GoogleAuthProvider();
-		return signInWithPopup(auth, provider);
+		return signInWithPopup(auth, provider).then((user) => {
+            
+        })
 	},
-	signInWithEmailAndPassword: async (email, password) => {},
-	signUpWithEmailAndPassword: async () => {},
-	signOut: async () => {},
+	signInWithEmailAndPassword: async (email: string, password: string) => {
+		return signInWithEmailAndPassword(auth, email, password);
+	},
+	signUpWithEmailAndPassword: async (email: string, password: string, rpassword: string) => {
+		if (password !== rpassword) {
+			throw new Error('Passwords do not match');
+		} else {
+			return createUserWithEmailAndPassword(auth, email, password);
+		}
+	},
+	signOut: async () => {
+		return signOut(auth);
+	},
 };
 
 export const useAuth = () => useContext(AuthContext);

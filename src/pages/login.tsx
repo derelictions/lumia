@@ -1,5 +1,5 @@
 import React from 'react';
-import { authService } from '../lib/firebase';
+import { authService } from '../lib/auth';
 import { Box, Button, Heading, Stack, useToast } from '@chakra-ui/react';
 
 export default function LoginPage() {
@@ -8,7 +8,16 @@ export default function LoginPage() {
 		<Stack>
 			<Heading>Login</Heading>
 			<Box>
-				<Button>Sign in with redirect</Button>
+				<Button
+					onclick={() => {
+						authService
+							.signInWithGoogle()
+							.then(() => {})
+							.catch((error) => {});
+					}}
+				>
+					Sign in with redirect
+				</Button>
 			</Box>
 		</Stack>
 	);
