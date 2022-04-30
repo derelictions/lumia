@@ -3,20 +3,27 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import { AnimatePresence } from 'framer-motion';
 import Layout from '../components/layouts/main';
 import { AuthProvider } from '../lib/auth';
+import ProtectedRoute from '../components/ProtectedRoute';
 
-// const noAuthRequired = ['/', '/login', '/about'];
+const noAuthRequired = ['/', '/auth', '/about'];
 
 function MyApp({ Component, pageProps, router }: AppProps) {
 	return (
-		<ChakraProvider theme={theme}>
-			<AuthProvider>
+		<AuthProvider>
+			<ChakraProvider theme={theme}>
 				<AnimatePresence exitBeforeEnter initial={true}>
 					<Layout>
-						<Component {...pageProps} key={router.route} />
+						{noAuthRequired.includes(router.pathname) ? (
+							<Component {...pageProps} key={router.route} />
+						) : (
+							<ProtectedRoute>
+								<Component {...pageProps} key={router.route} />
+							</ProtectedRoute>
+						)}
 					</Layout>
 				</AnimatePresence>
-			</AuthProvider>
-		</ChakraProvider>
+			</ChakraProvider>
+		</AuthProvider>
 	);
 }
 export default MyApp;
