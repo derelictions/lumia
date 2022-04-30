@@ -18,6 +18,7 @@ import { TriangleDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 
 import { motion } from 'framer-motion';
+import { useAuth } from '../lib/auth';
 const MotionBox = motion(Box);
 const MotionImage = motion(Image);
 const MotionStack = motion(Stack);
@@ -97,14 +98,24 @@ const NavListVariants = {
 
 const MenuList: FunctionComponent<MenuListProps> = () => {
 	const color = useColorModeValue('gray.200', 'gray.800');
+
+	const { user, authService } = useAuth();
+	const { signOut } = authService;
+
 	const kids = (
 		<>
 			<NavItem to='/about'>About</NavItem>
 			<NavItem to='/how'>How it works?</NavItem>
 			<NavItem to='/hof'>Hall of Fame</NavItem>
-			<NavItem to='/login'>
-				<Button>Log in</Button>
-			</NavItem>
+			{!user ? (
+				<NavItem to='/login'>
+					<Button>Log in</Button>
+				</NavItem>
+			) : (
+				<NavItem to='/'>
+					<Button onClick={() => signOut()}>Log out</Button>
+				</NavItem>
+			)}
 		</>
 	);
 

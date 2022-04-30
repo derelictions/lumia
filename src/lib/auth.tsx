@@ -4,55 +4,67 @@ import { auth } from './firebase';
 // import firebase from 'firebase/app';
 import {
 	GoogleAuthProvider,
-	onIdTokenChanged,
+	// onIdTokenChanged,
+	onAuthStateChanged,
 	signInWithPopup,
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
+	User,
 } from 'firebase/auth';
+// import { useRouter } from 'next/router';
 
-const AuthContext = createContext({});
+const AuthContext = createContext<any>({});
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FunctionComponent<{}> = ({ children }) => {
-	const [user, setUser] = useState(null);
+	// const router = useRouter();
+	const [user, setUser] = useState<User | any>();
+	const [loading, setLoading] = useState(true);
+
+	console.log(user);
+
 	useEffect(() => {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
-		return onIdTokenChanged(auth, async (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			if (!user) {
 				setUser(null);
 				nookies.set(undefined, 'token', '', {});
 			} else {
 				const token = await user.getIdToken();
 				nookies.set(undefined, 'token', token, {});
+				setUser(user);
 			}
+			setLoading(false);
 		});
+
+		return () => {
+			nookies.set(undefined, 'token', '', {});
+			unsubscribe();
+		};
 	}, []);
 
+	const authService = {
+		signInWithGoogle: async () => {
+			const provider = new GoogleAuthProvider();
+			return signInWithPopup(auth, provider);
+		},
+		logInWithEmailAndPassword: async (email: string, password: string) => {
+			return signInWithEmailAndPassword(auth, email, password);
+		},
+
+		signUpWithEmailAndPassword: async (email: string, password: string) => {
+			return createUserWithEmailAndPassword(auth, email, password);
+		},
+
+		signOut: async () => {
+			return signOut(auth);
+		},
+	};
+
 	return (
-		<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+		<AuthContext.Provider value={{ user, authService }}>
+			{loading ? null : children}
+		</AuthContext.Provider>
 	);
 };
-
-export const authService = {
-	signInWithGoogle: async () => {
-		const provider = new GoogleAuthProvider();
-		return signInWithPopup(auth, provider).then((user) => {
-            
-        })
-	},
-	signInWithEmailAndPassword: async (email: string, password: string) => {
-		return signInWithEmailAndPassword(auth, email, password);
-	},
-	signUpWithEmailAndPassword: async (email: string, password: string, rpassword: string) => {
-		if (password !== rpassword) {
-			throw new Error('Passwords do not match');
-		} else {
-			return createUserWithEmailAndPassword(auth, email, password);
-		}
-	},
-	signOut: async () => {
-		return signOut(auth);
-	},
-};
-
-export const useAuth = () => useContext(AuthContext);

@@ -4,16 +4,18 @@ import { AnimatePresence } from 'framer-motion';
 import Layout from '../components/layouts/main';
 import { AuthProvider } from '../lib/auth';
 
+// const noAuthRequired = ['/', '/login', '/about'];
+
 function MyApp({ Component, pageProps, router }: AppProps) {
 	return (
 		<ChakraProvider theme={theme}>
-			<Layout>
+			<AuthProvider>
 				<AnimatePresence exitBeforeEnter initial={true}>
-					<AuthProvider>
+					<Layout>
 						<Component {...pageProps} key={router.route} />
-					</AuthProvider>
+					</Layout>
 				</AnimatePresence>
-			</Layout>
+			</AuthProvider>
 		</ChakraProvider>
 	);
 }
