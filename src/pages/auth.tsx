@@ -22,7 +22,6 @@ import { useAuth } from '../lib/auth';
 import { useRouter } from 'next/router';
 
 interface AuthProps {
-	children: React.ReactNode;
 	isLogin: boolean;
 	setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
