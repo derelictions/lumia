@@ -108,7 +108,7 @@ const MenuList: FunctionComponent<MenuListProps> = () => {
 			<NavItem to='/how'>How it works?</NavItem>
 			<NavItem to='/hof'>Hall of Fame</NavItem>
 			{!user ? (
-				<NavItem to='/login'>
+				<NavItem to='/auth'>
 					<Button>Log in</Button>
 				</NavItem>
 			) : (
